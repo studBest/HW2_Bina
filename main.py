@@ -42,7 +42,8 @@ def plot_distance_and_expanded_wrt_weight_figure(
     # See documentation here:
     # https://matplotlib.org/2.0.0/api/_as_gen/matplotlib.axes.Axes.plot.html
     # You can also Google for additional examples.
-    raise NotImplementedError()  # TODO: remove this line!
+
+    ax1.plot(weights, total_cost, 'b-')
 
     # ax1: Make the y-axis label, ticks and tick labels match the line color.
     ax1.set_ylabel('solution cost', color='b')
@@ -50,13 +51,16 @@ def plot_distance_and_expanded_wrt_weight_figure(
     ax1.set_xlabel('weight')
 
     # Create another axis for the #expanded curve.
-    ax2 = ax1.twinx()
+    ax2 = ax1.twinx(total_nr_expanded)
 
     # TODO: Plot the total expanded with ax2. Use `ax2.plot(...)`.
     # TODO: ax2: Make the y-axis label, ticks and tick labels match the line color.
     # TODO: Make this curve colored red with solid line style.
     # TODO: Set its label to be '#Expanded states'.
-    raise NotImplementedError()  # TODO: remove this line!
+    ax2.plot(total_nr_expanded, 'r-')
+
+    ax1.set_ylabel('#Expanded states', color='r')
+    ax1.tick_params('y', colors='r')
 
     curves = [p1, p2]
     ax1.legend(curves, [curve.get_label() for curve in curves])
@@ -82,8 +86,21 @@ def run_astar_for_weights_in_range(heuristic_type: HeuristicFunctionType, proble
     #     Don't forget to pass `max_nr_states_to_expand` to the AStar c'tor.
     #  3. Call the function `plot_distance_and_expanded_wrt_weight_figure()`
     #     with these 3 generated lists.
-    raise NotImplementedError()  # TODO: remove this line!
+    arrayOfWeights = np.linspace(0.5, 1, num=n)
+    costsList = []
+    expandedStatesList = []
+    weightsList = []
+    for weight in arrayOfWeights:
+        astarHeuristic = AStar(heuristic_type, weight, max_nr_states_to_expand)
+        res_astar = astarHeuristic.solve_problem(problem)
+        '''print(res_astar)
+        if res_AStarAirDistHeuristic.is_solution_found is not None:
+            costsList.append(res_AStarAirDistHeuristic.solution_g_cost)
+            expandedStatesList.append(res_AStarAirDistHeuristic.nr_expanded_states)
+            weightsList.append(weight)
 
+    plot_distance_and_expanded_wrt_weight_figure(problem.name, weightsList, costsList, expandedStatesList)
+    '''
 
 def toy_map_problem_experiments():
     print()
@@ -101,14 +118,19 @@ def toy_map_problem_experiments():
     #       solve the same `toy_map_problem` with it and print the results (as before).
     # Notice: AStar constructor receives the heuristic *type* (ex: `MyHeuristicClass`),
     #         and NOT an instance of the heuristic (eg: not `MyHeuristicClass()`).
-    astar = AStar(NullHeuristic,0)
-    res_astar = astar.solve_problem(toy_map_problem)
-    print(res_astar)
+
+    astar = AStar(NullHeuristic, 0)
+    res_AStar = astar.solve_problem(toy_map_problem)
+    print(res_AStar)
 
     # Ex.13
     # TODO: create an instance of `AStar` with the `AirDistHeuristic`,
     #       solve the same `toy_map_problem` with it and print the results (as before).
-    exit()  # TODO: remove!
+
+    astarAirDistHeuristic = AStar(AirDistHeuristic)
+    res_AStarAirDistHeuristic = astarAirDistHeuristic.solve_problem(toy_map_problem)
+    print(res_AStarAirDistHeuristic)
+
 
     # Ex.14
     # TODO:
@@ -119,7 +141,7 @@ def toy_map_problem_experiments():
     #     (upper in this file).
     #  3. Call here the function `run_astar_for_weights_in_range()`
     #     with `AirDistHeuristic` and `toy_map_problem`.
-    exit()  # TODO: remove!
+    run_astar_for_weights_in_range(AirDistHeuristic, toy_map_problem)
 
 
 # --------------------------------------------------------------------
