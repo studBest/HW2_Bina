@@ -21,4 +21,5 @@ class AirDistHeuristic(HeuristicFunction):
         assert isinstance(self.problem, MapProblem)
         assert isinstance(state, MapState)
 
-        raise NotImplementedError()  # TODO: remove this line!
+
+

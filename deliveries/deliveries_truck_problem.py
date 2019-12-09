@@ -51,12 +51,8 @@ class DeliveriesTruckState(GraphProblemState):
         """
         assert isinstance(other, DeliveriesTruckState)
 
-        # TODO [Ex.15]: Complete the implementation of this method!
-        #  Note that you can simply compare two instances of `Junction` type
-        #   (using equals `==` operator) because the class `Junction` explicitly
-        #   implements the `__eq__()` method. The types `frozenset` and `Delivery`
-        #   are also comparable (in the same manner).
-        raise NotImplementedError()  # TODO: remove this line.
+        return self.current_location == other.current_location and self.dropped_deliveries == other.dropped_deliveries\
+               and self.loaded_deliveries == other.loaded_deliveries
 
     def __hash__(self):
         """
@@ -76,7 +72,7 @@ class DeliveriesTruckState(GraphProblemState):
          Notice that `sum()` can receive an *ITERATOR* as argument; That is, you can simply write something like this:
         >>> sum(<some expression using item> for item in some_collection_of_items)
         """
-        raise NotImplementedError()  # TODO: remove this line.
+        sum(item.nr_packages for item in self.loaded_deliveries)
 
 
 @dataclass(frozen=True)
@@ -254,7 +250,7 @@ class DeliveriesTruckProblem(GraphProblem):
                 generated set.
             Note: This method can be implemented using a single line of code.
         """
-        raise NotImplementedError()  # TODO: remove this line!
+        return set(set(self.problem_input.deliveries)-state.loaded_deliveries-state.dropped_deliveries)
 
     def get_all_junctions_in_remaining_truck_path(self, state: DeliveriesTruckState) -> Set[Junction]:
         """
