@@ -51,8 +51,12 @@ class DeliveriesTruckState(GraphProblemState):
         """
         assert isinstance(other, DeliveriesTruckState)
 
-        return self.current_location == other.current_location and self.dropped_deliveries == other.dropped_deliveries\
-               and self.loaded_deliveries == other.loaded_deliveries
+        # TODO [Ex.15]: Complete the implementation of this method!
+        #  Note that you can simply compare two instances of `Junction` type
+        #   (using equals `==` operator) because the class `Junction` explicitly
+        #   implements the `__eq__()` method. The types `frozenset` and `Delivery`
+        #   are also comparable (in the same manner).
+        raise NotImplementedError()  # TODO: remove this line.
 
     def __hash__(self):
         """
@@ -72,7 +76,7 @@ class DeliveriesTruckState(GraphProblemState):
          Notice that `sum()` can receive an *ITERATOR* as argument; That is, you can simply write something like this:
         >>> sum(<some expression using item> for item in some_collection_of_items)
         """
-        sum(item.nr_packages for item in self.loaded_deliveries)
+        raise NotImplementedError()  # TODO: remove this line.
 
 
 @dataclass(frozen=True)
@@ -186,7 +190,7 @@ class DeliveriesTruckProblem(GraphProblem):
         This method receives a state and returns whether this state is a goal.
         TODO [Ex.15]: implement this method!
         """
-        assert isinstance(state, DeliveriesTruckState)
+        return state.
         raise NotImplementedError()  # TODO: remove the line!
 
     def _calc_map_road_cost(self, link: Link) -> DeliveryCost:
@@ -250,7 +254,7 @@ class DeliveriesTruckProblem(GraphProblem):
                 generated set.
             Note: This method can be implemented using a single line of code.
         """
-        return set(set(self.problem_input.deliveries)-state.loaded_deliveries-state.dropped_deliveries)
+        raise NotImplementedError()  # TODO: remove this line!
 
     def get_all_junctions_in_remaining_truck_path(self, state: DeliveriesTruckState) -> Set[Junction]:
         """
